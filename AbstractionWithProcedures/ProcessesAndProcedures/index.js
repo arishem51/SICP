@@ -12,13 +12,17 @@ const createIsEqualToNumber = (numberToEqual) => {
 const isZero = createIsEqualToNumber(ZERO);
 const isOne = createIsEqualToNumber(ONE);
 
+const reduceOne = (numToReduce) => {
+  return numToReduce - ONE;
+};
+
 // n! = n * (n - 1) * (n - 2)...
 
 function factorial(n) {
   if (isOne(n)) {
     return n;
   }
-  return n * factorial(n - ONE);
+  return n * factorial(reduceOne(n));
 }
 
 // Another approach
@@ -46,7 +50,7 @@ function fibonacci(num) {
   if (isZero(num) || isOne(num)) {
     return num;
   }
-  return fibonacci(num - 1) + fibonacci(num - 2);
+  return fibonacci(reduceOne(num)) + fibonacci(num - 2);
 }
 
 // 4 => fib(3) + fib(2) => fib(1) + fib(2) + fib(1) + fib(0) + 1 + 1 + 0 + 1 + 0
@@ -59,12 +63,7 @@ function fibIter(first, second, count) {
   if (isZero(count)) {
     return second;
   }
-
-  const nextCount = count - ONE;
-  const prev = first + second;
-  const current = first;
-
-  return fibIter(prev, current, nextCount);
+  return fibIter(first + second, first, reduceOne(count));
 }
 
 // 4 => fib(1,0,4) => fib(1,1,3) => fib(2, 1,2) => fib(3,2,1) => fib(5,3,0)
