@@ -11,8 +11,6 @@ function factorial(n) {
   return n * factorial(n - 1);
 }
 
-console.log(factorial(6));
-
 // Another approach
 // Multiply until reach to n, => 1 * 2 * 3 * ... * n
 
@@ -27,4 +25,5 @@ function generateProductNum(product, counter, maxCount) {
   return product;
 }
 
+console.log(factorial(6));
 console.log(factorialV2(6));
