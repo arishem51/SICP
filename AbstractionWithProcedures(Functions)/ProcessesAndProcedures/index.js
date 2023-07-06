@@ -1,21 +1,16 @@
 // Linear Recursion and Iteration
 
-const ZERO = 0;
-const ONE = 1;
-const TWO = 2;
-const THREE = 3;
-
 const createIsEqualToNumber = (numberToEqual) => {
   return (numberToCompare) => {
     return numberToCompare === numberToEqual;
   };
 };
 
-const isZero = createIsEqualToNumber(ZERO);
-const isOne = createIsEqualToNumber(ONE);
+const isZero = createIsEqualToNumber(0);
+const isOne = createIsEqualToNumber(1);
 
 const reduceOne = (numToReduce) => {
-  return numToReduce - ONE;
+  return numToReduce - 1;
 };
 
 // n! = n * (n - 1) * (n - 2)...
@@ -31,12 +26,12 @@ function factorial(n) {
 // Multiply until reach to n, => 1 * 2 * 3 * ... * n
 
 function factorialV2(n) {
-  return generateProductNum(ONE, ONE, n);
+  return generateProductNum(1, 1, n);
 }
 
 function generateProductNum(product, counter, maxCount) {
   if (counter <= maxCount) {
-    return generateProductNum(product * counter, counter + ONE, maxCount);
+    return generateProductNum(product * counter, counter + 1, maxCount);
   }
   return product;
 }
@@ -52,13 +47,13 @@ function fibonacci(num) {
   if (isZero(num) || isOne(num)) {
     return num;
   }
-  return fibonacci(reduceOne(num)) + fibonacci(num - TWO);
+  return fibonacci(reduceOne(num)) + fibonacci(num - 2);
 }
 
 // 4 => fib(3) + fib(2) => fib(1) + fib(2) + fib(1) + fib(0) + 1 + 1 + 0 + 1 + 0
 
 function fibonacciV2(num) {
-  return fibIter(ONE, ZERO, num);
+  return fibIter(1, 0, num);
 }
 
 function fibIter(first, second, count) {
@@ -77,13 +72,13 @@ console.log(fibonacci(4), fibonacciV2(4));
 // f(4) = f(3) + 2f(2) + 3f(1) = f(2) + 2f(1) + 3f(0) + 4 + 3 = 2 + 2 + 0 + 4 + 3 = 11
 
 function exercise111(number) {
-  if (number < THREE) {
+  if (number < 3) {
     return number;
   }
   return (
     exercise111(reduceOne(number)) +
-    TWO * exercise111(number - TWO) +
-    THREE * exercise111(number - THREE)
+    2 * exercise111(number - 2) +
+    3 * exercise111(number - 3)
   );
 }
 
@@ -93,3 +88,27 @@ function exercise111V2(number) {
 }
 
 console.log(exercise111(4), exercise111V2(4));
+
+// test
+
+// 6 => 6 + 5 + 4 + 3 ... + 0;
+
+function sumRecursive(number) {
+  if (number > 1) {
+    return number + sumRecursive(number - 1);
+  }
+  return 1;
+}
+
+function sumIterative(number) {
+  function iterative(total, count) {
+    if (count <= number) {
+      return iterative(total + count, count + 1);
+    }
+    return total;
+  }
+
+  return iterative(0, 0);
+}
+
+console.log(sumIterative(3));
