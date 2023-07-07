@@ -142,4 +142,22 @@ function halfIntervalMethod(func, a, b) {
   return new Error("Value aren't of opposite sign");
 }
 
+console.log(halfIntervalMethod(Math.sin, 2, 4));
+
 console.log(halfIntervalMethod((x) => x * x * x - 2 * x - 3, 1, 2));
+
+const tolerance = 0.00001;
+
+function fixedPoint(func, firstGuess) {
+  const closeEnough = (x, y) => Math.abs(x - y) < tolerance;
+  const tryWith = (guess) => {
+    const next = func(guess);
+    if (closeEnough(guess, next)) {
+      return next;
+    }
+    return tryWith(next);
+  };
+  return tryWith(firstGuess);
+}
+
+console.log(fixedPoint(Math.cos, 1));
