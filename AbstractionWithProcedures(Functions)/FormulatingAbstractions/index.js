@@ -161,3 +161,5 @@ function fixedPoint(func, firstGuess) {
 }
 
 console.log(fixedPoint(Math.cos, 1));
+
+// Function as Returned Values

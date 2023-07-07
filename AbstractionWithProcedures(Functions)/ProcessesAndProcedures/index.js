@@ -1,3 +1,5 @@
+const { isEven } = require("../../helper/index.js");
+
 // Linear Recursion and Iteration
 
 const createIsEqualToNumber = (numberToEqual) => {
@@ -183,10 +185,6 @@ function fastExpt(b, n) {
     return square(fastExpt(b, n / 2));
   }
   return b * fastExpt(b, n - 1);
-}
-
-function isEven(n) {
-  return n % 2 === 0;
 }
 
 function square(n) {
