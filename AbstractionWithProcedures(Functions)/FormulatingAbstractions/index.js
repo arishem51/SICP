@@ -1,4 +1,4 @@
-const { average } = require("../../helper/index.js");
+const { average, square } = require("../../helper/index.js");
 
 // 1.3 Formulating Abstractions with Higher-Order Functions
 
@@ -163,3 +163,27 @@ function fixedPoint(func, firstGuess) {
 console.log(fixedPoint(Math.cos, 1));
 
 // Function as Returned Values
+
+function averageDamp(func) {
+  return (x) => average(x, func(x));
+}
+
+console.log(averageDamp(square)(10));
+
+function sqrt(x) {
+  return fixedPoint(
+    averageDamp((y) => x / y),
+    1
+  );
+}
+
+console.log(sqrt(9));
+
+function cubeRoot(x) {
+  return fixedPoint(
+    averageDamp((y) => x / square(y)),
+    1
+  );
+}
+
+console.log(cubeRoot(8));

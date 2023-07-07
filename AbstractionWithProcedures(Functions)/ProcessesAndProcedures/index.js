@@ -1,4 +1,4 @@
-const { isEven } = require("../../helper/index.js");
+const { isEven, square } = require("../../helper/index.js");
 
 // Linear Recursion and Iteration
 
@@ -185,10 +185,6 @@ function fastExpt(b, n) {
     return square(fastExpt(b, n / 2));
   }
   return b * fastExpt(b, n - 1);
-}
-
-function square(n) {
-  return n * n;
 }
 
 console.log(fastExpt(2, 3));

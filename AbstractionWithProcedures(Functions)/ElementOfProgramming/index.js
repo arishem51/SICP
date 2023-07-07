@@ -1,4 +1,4 @@
-const { average } = require("../../helper/index.js");
+const { average, square } = require("../../helper/index.js");
 
 // Expressions
 
@@ -29,10 +29,6 @@ as the circumference computed above).
 // Compound functions
 
 // function name(parameters) { return expression; }
-
-function square(x) {
-  return x * x;
-}
 
 console.log("square", square(44), square(12 + 17));
 console.log("square", square(square(3)));
