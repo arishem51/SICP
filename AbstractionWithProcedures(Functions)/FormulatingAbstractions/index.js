@@ -64,8 +64,8 @@ console.log(sumCubes(1, 10));
 // }
 
 function sumPi(a, b) {
-  const calculateFirstTerm = (a) => 1 / (a * (a + 2));
-  const calculateNextValue = (a) => a + 4;
+  const calculateFirstTerm = (x) => 1 / (x * (x + 2));
+  const calculateNextValue = (x) => x + 4;
   return creaseSumPattern(a, b, calculateFirstTerm, calculateNextValue);
 }
 
@@ -80,3 +80,20 @@ function integral(a, b, func, dx) {
 
 console.log(integral(0, 1, cube, 0.01));
 console.log(integral(0, 1, cube, 0.001));
+
+// function fxy(x, y) {
+//   function helper(a, b) {
+//     return x * square(a) + y * b + a * b;
+//   }
+//   return helper(1 + x * y, 1 - y);
+// }
+
+// function fxy(x, y) {
+//   return ((a, b) => x * square(a) + y * b + a * b)(1 + x * y, 1 - y);
+// }
+
+function fxy(x, y) {
+  const a = 1 + x * y;
+  const b = 1 - y;
+  return x * square(a) + y * b + a * b;
+}
