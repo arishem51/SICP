@@ -170,15 +170,6 @@ function averageDamp(func) {
 
 console.log(averageDamp(square)(10));
 
-function sqrt(x) {
-  return fixedPoint(
-    averageDamp((y) => x / y),
-    1
-  );
-}
-
-console.log(sqrt(9));
-
 function cubeRoot(x) {
   return fixedPoint(
     averageDamp((y) => x / square(y)),
@@ -187,3 +178,31 @@ function cubeRoot(x) {
 }
 
 console.log(cubeRoot(8));
+
+function deriv(func) {
+  const dx = 0.00001;
+  return (x) => (func(x + dx) - func(x)) / dx;
+}
+
+console.log(deriv(cube)(5));
+
+function newtonTransform(func) {
+  return (x) => x - func(x) / deriv(func)(x);
+}
+
+function newtonsMethod(func, guess) {
+  return fixedPoint(newtonTransform(func), guess);
+}
+
+// function sqrt(x) {
+//   return fixedPoint(
+//     averageDamp((y) => x / y),
+//     1
+//   );
+// }
+
+function sqrt(x) {
+  return newtonsMethod((y) => square(y) - x, 1);
+}
+
+console.log(sqrt(9));
