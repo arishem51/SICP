@@ -1,3 +1,5 @@
+const { average } = require("../../helper/index.js");
+
 // 1.3 Formulating Abstractions with Higher-Order Functions
 
 function cube(x) {
@@ -97,3 +99,47 @@ function fxy(x, y) {
   const b = 1 - y;
   return x * square(a) + y * b + a * b;
 }
+
+// Finding roots of equations by the half-interval method
+// t, if we are given points a and b such that f(a) < 0 < f(b)
+// Example: -12 < 0 < 18
+// Let x be the average of a and b to compute f(x)
+// If f(x) > 0 => Have a zero between a and x
+// Else have a zero between x and b
+
+const sumNums = (a, b) => a + b;
+
+const isNegative = (a) => a < 0;
+const isPositive = (a) => a > 0;
+
+const CLOSE_POINT = 0.001;
+const closeEnough = (a, b) => Math.abs(a - b) < CLOSE_POINT;
+
+function search(func, negativePoint, positivePoint) {
+  const midPoint = average(negativePoint, positivePoint);
+  if (closeEnough(negativePoint, positivePoint)) {
+    return midPoint;
+  }
+  const testPoint = func(midPoint);
+  if (isPositive(testPoint)) {
+    return search(func, negativePoint, midPoint);
+  }
+  if (isNegative(testPoint)) {
+    return search(func, midPoint, positivePoint);
+  }
+  return midPoint;
+}
+
+function halfIntervalMethod(func, a, b) {
+  const firstTerm = func(a);
+  const secondTerm = func(b);
+  if (isNegative(firstTerm) && isPositive(secondTerm)) {
+    return search(func, a, b);
+  }
+  if (isNegative(secondTerm) && isPositive(firstTerm)) {
+    return search(func, b, a);
+  }
+  return new Error("Value aren't of opposite sign");
+}
+
+console.log(halfIntervalMethod((x) => x * x * x - 2 * x - 3, 1, 2));

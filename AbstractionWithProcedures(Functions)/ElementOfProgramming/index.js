@@ -1,3 +1,5 @@
+const { average } = require("../../helper/index.js");
+
 // Expressions
 
 137 + 349;
@@ -132,10 +134,6 @@ function sqrt(x) {
 
   function improve(guess) {
     return average(guess, x / guess);
-  }
-
-  function average(x, y) {
-    return (x + y) / 2;
   }
 
   function sqrtIter(guess) {
