@@ -39,6 +39,10 @@ function multiply() {
   }, 1);
 }
 
+function isGreater(a, b) {
+  return a > b;
+}
+
 exports.average = average;
 exports.isEven = isEven;
 exports.square = square;
@@ -47,3 +51,4 @@ exports.plus = plus;
 exports.minus = minus;
 exports.divide = divide;
 exports.multiply = multiply;
+exports.isGreater = isGreater;

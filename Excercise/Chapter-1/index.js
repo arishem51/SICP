@@ -1,4 +1,11 @@
-const { plus, increase, minus, multiply } = require("../../helper/index.js");
+const {
+  plus,
+  increase,
+  minus,
+  multiply,
+  isGreater,
+  square,
+} = require("../../helper/index.js");
 
 /*
     Exercise 1.2
@@ -11,6 +18,33 @@ function expressionsEx12() {
 }
 
 console.log(expressionsEx12());
+
+/*
+    Exercise 1
+*/
+
+function expressionsEx13(a, b, c) {
+  const greatest = isGreater(a, isGreater(b, c) ? b : c);
+  if (greatest) {
+    // a is the greatest
+    const greater = isGreater(b, c);
+    if (greater) {
+      return plus(square(a), square(b));
+    }
+    return plus(square(a), square(c));
+  }
+  if (isGreater(b, c)) {
+    // b is the greatest
+    const greater = isGreater(a, c);
+    if (greater) {
+      return plus(square(b), square(a));
+    }
+    return plus(square(b), square(c));
+  }
+  return plus(square(c), square(isGreater(a, b) ? a : b));
+}
+
+console.log(expressionsEx13(10, 6, 7));
 
 /*
     Exercise 1.9
