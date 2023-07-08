@@ -1,10 +1,12 @@
+const { plus, increase, minus, multiply } = require("../../helper/index.js");
+
 /*
     Exercise 1.2
 */
 
 function expressionsEx12() {
-  const numerator = 5 + 4 + (2 - (3 - (6 + 4 / 5)));
-  const denominator = 3 * (6 - 2) * (2 - 7);
+  const numerator = plus(5, 4, minus(2, minus(3, plus(6, 4 / 5))));
+  const denominator = multiply(3, minus(6, 2), minus(2 - 7));
   return numerator / denominator;
 }
 
@@ -17,14 +19,12 @@ console.log(expressionsEx12());
     its argument by 1.
 */
 
-const { increase } = require("../../helper/index.js");
-
-function plus(a, b) {
+function plusV1(a, b) {
   // Iterative process
-  return a === 0 ? b : increase(plus(dec(a), b));
+  return a === 0 ? b : increase(plusV1(dec(a), b));
 }
 
-function plus(a, b) {
+function plusV2(a, b) {
   // Recursive process
-  return a === 0 ? b : plus(dec(a), increase(b));
+  return a === 0 ? b : plusV2(dec(a), increase(b));
 }

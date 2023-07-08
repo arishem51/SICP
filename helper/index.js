@@ -1,3 +1,7 @@
+function isNaN(x) {
+  return Number.isNaN(x);
+}
+
 function average(x, y) {
   return (x + y) / 2;
 }
@@ -14,8 +18,9 @@ function increase(x) {
   return x + 1;
 }
 
-function plus(a, b) {
-  return a + b;
+function plus() {
+  const args = [...arguments];
+  return args.reduce((prev, current) => (prev += current), 0);
 }
 
 function minus(a, b) {
@@ -26,8 +31,12 @@ function divide(a, b) {
   return a / b;
 }
 
-function multiply(a, b) {
-  return a * b;
+function multiply() {
+  const args = [...arguments];
+  return args.reduce((prev, current) => {
+    const value = isNaN(current) ? 1 : current;
+    return prev * value;
+  }, 1);
 }
 
 exports.average = average;
