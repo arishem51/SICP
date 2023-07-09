@@ -1,37 +1,56 @@
-"use strict";
 // Expressions
-Object.defineProperty(exports, "__esModule", { value: true });
-const helper_1 = require("../../helper");
+
+import { average, square } from "../../helper";
+
 137 + 349;
+
 const size = 2;
+
 console.log(size);
+
 console.log(size * 5);
+
 const pi = 3.14159;
 const radius = 10;
+
 console.log(pi * radius * radius);
+
 const circumference = 2 * pi * radius;
+
 console.log(circumference);
-/*
-    * The simples means of abstraction is Constant declaration.
+
+/* 
+    * The simples means of abstraction is Constant declaration. 
 
     * It allows us to use simple names to refer to the results of compound operations (such
 as the circumference computed above).
  */
+
 // Compound functions
+
 // function name(parameters) { return expression; }
-console.log("square", (0, helper_1.square)(44), (0, helper_1.square)(12 + 17));
-console.log("square", (0, helper_1.square)((0, helper_1.square)(3)));
+
+console.log("square", square(44), square(12 + 17));
+console.log("square", square(square(3)));
+
 // x^2 + y^2 => square(x) + square(y)
-function sumOfSquares(x, y) {
-    return (0, helper_1.square)(x) + (0, helper_1.square)(y);
+
+function sumOfSquares(x: number, y: number) {
+  return square(x) + square(y);
 }
+
 console.log("sum squares", sumOfSquares(5, 12));
+
 // use sumOfSquares as a building block in constructing further functions:
-function f(a) {
-    return sumOfSquares(a + 1, a * 2);
+
+function f(a: number) {
+  return sumOfSquares(a + 1, a * 2);
 }
+
 console.log(f(5));
+
 // The Substitution Model for Function Application
+
 /*
     We have two different model for function application
 
@@ -57,32 +76,43 @@ console.log(f(5));
     136
 
 */
+
 // Conditional Expressions and Predicates
+
 /*
     |x| =  {x if x ≥ 0 or –x otherwise}
 */
-function abs(x) {
-    return x > 0 ? x : x === 0 ? 0 : -x;
+
+function abs(x: number) {
+  return x > 0 ? x : x === 0 ? 0 : -x;
 }
-function greaterOrEqualV1(x, y) {
-    return x > y || x === y;
+
+function greaterOrEqualV1(x: number, y: number) {
+  return x > y || x === y;
 }
-function greaterOrEqualV2(x, y) {
-    return !(x < y);
+
+function greaterOrEqualV2(x: number, y: number) {
+  return !(x < y);
 }
-/*
+
+/* 
 Exercise 1.3
 */
-function sqrt(x) {
-    function isGoodEnough(guess) {
-        return Math.abs((0, helper_1.square)(guess) - x) < 0.001;
-    }
-    function improve(guess) {
-        return (0, helper_1.average)(guess, x / guess);
-    }
-    function sqrtIter(guess) {
-        return isGoodEnough(guess) ? guess : sqrtIter(improve(guess));
-    }
-    return sqrtIter(1);
+
+function sqrt(x: number) {
+  function isGoodEnough(guess: number) {
+    return Math.abs(square(guess) - x) < 0.001;
+  }
+
+  function improve(guess: number) {
+    return average(guess, x / guess);
+  }
+
+  function sqrtIter(guess: number): number {
+    return isGoodEnough(guess) ? guess : sqrtIter(improve(guess));
+  }
+
+  return sqrtIter(1);
 }
+
 console.log(sqrt(9));
