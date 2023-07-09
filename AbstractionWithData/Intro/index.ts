@@ -7,30 +7,34 @@ type PairNumber =
     }
   | number;
 
-const makePairNum = (x: number, y: number): PairNumber => ({
-  head: x,
-  tail: y,
-});
-
-function getPairPart(type: "head" | "tail") {
-  return (x: PairNumber) => {
-    if (typeof x === "number") {
+const makePairNum = (x: number, y: number) => {
+  function dispatch(m: number) {
+    if (m === 0) {
       return x;
     }
-    return type === "head" ? x.head : x.tail;
+    if (m === 1) {
+      return y;
+    }
+    return new Error(`${m}, The argument you provide is not 0 or 1 -- pair `);
+  }
+  return dispatch;
+};
+
+function getRationalNumPart(type: "numerator" | "denominator") {
+  return (x: PairNumber) => {
+    const g = gcd(getHead(x), getTail(x));
+    return divide(type === "numerator" ? getHead(x) : getTail(x), g);
   };
 }
 
-const getHead = getPairPart("head");
-const getTail = getPairPart("tail");
+const getHead = (x: any) => x(0);
+const getTail = (x: any) => x(1);
 
-function makeRationalNum(numerator: number, denominator: number) {
-  const g = gcd(numerator, denominator);
-  return makePairNum(divide(numerator, g), divide(denominator, g));
-}
+const makeRationalNum = makePairNum;
 
-const getNumerator = getHead;
-const getDenominator = getTail;
+const getNumerator = getRationalNumPart("numerator");
+
+const getDenominator = getRationalNumPart("numerator");
 
 function multiplyDenominator(x: PairNumber, y: PairNumber) {
   return getDenominator(x) * getDenominator(y);
@@ -95,7 +99,3 @@ const printRat = (x: PairNumber) => {
 
 const oneHalf = makeRationalNum(1, 2);
 const oneThird = makePairNum(1, 3);
-
-printRat(oneHalf);
-printRat(oneThird);
-printRat(addRationalNum(oneThird, oneThird));

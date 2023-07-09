@@ -1,26 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const helper_1 = require("../../helper");
-const makePairNum = (x, y) => ({
-    head: x,
-    tail: y,
-});
-function getPairPart(type) {
-    return (x) => {
-        if (typeof x === "number") {
+const makePairNum = (x, y) => {
+    function dispatch(m) {
+        if (m === 0) {
             return x;
         }
-        return type === "head" ? x.head : x.tail;
+        if (m === 1) {
+            return y;
+        }
+        return new Error(`${m}, The argument you provide is not 0 or 1 -- pair `);
+    }
+    return dispatch;
+};
+function getRationalNumPart(type) {
+    return (x) => {
+        const g = (0, helper_1.gcd)(getHead(x), getTail(x));
+        return (0, helper_1.divide)(type === "numerator" ? getHead(x) : getTail(x), g);
     };
 }
-const getHead = getPairPart("head");
-const getTail = getPairPart("tail");
-function makeRationalNum(numerator, denominator) {
-    const g = (0, helper_1.gcd)(numerator, denominator);
-    return makePairNum((0, helper_1.divide)(numerator, g), (0, helper_1.divide)(denominator, g));
-}
-const getNumerator = getHead;
-const getDenominator = getTail;
+const getHead = (x) => x(0);
+const getTail = (x) => x(1);
+const makeRationalNum = makePairNum;
+const getNumerator = getRationalNumPart("numerator");
+const getDenominator = getRationalNumPart("numerator");
 function multiplyDenominator(x, y) {
     return getDenominator(x) * getDenominator(y);
 }
@@ -49,6 +52,3 @@ const printRat = (x) => {
 };
 const oneHalf = makeRationalNum(1, 2);
 const oneThird = makePairNum(1, 3);
-printRat(oneHalf);
-printRat(oneThird);
-printRat(addRationalNum(oneThird, oneThird));
