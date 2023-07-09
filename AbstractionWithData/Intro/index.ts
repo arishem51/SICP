@@ -1,9 +1,11 @@
 import { divide, gcd, isEqual, minus, plus } from "../../helper";
 
-type PairNumber = {
-  head: number;
-  tail: number;
-};
+type PairNumber =
+  | {
+      head: number;
+      tail: number;
+    }
+  | number;
 
 const makePairNum = (x: number, y: number): PairNumber => ({
   head: x,
@@ -11,7 +13,7 @@ const makePairNum = (x: number, y: number): PairNumber => ({
 });
 
 function getPairPart(type: "head" | "tail") {
-  return (x: number | PairNumber) => {
+  return (x: PairNumber) => {
     if (typeof x === "number") {
       return x;
     }
@@ -28,10 +30,9 @@ function makeRationalNum(numerator: number, denominator: number) {
 }
 
 const getNumerator = getHead;
-
 const getDenominator = getTail;
 
-function multiplyDenominator(x: PairNumber | number, y: PairNumber | number) {
+function multiplyDenominator(x: PairNumber, y: PairNumber) {
   return getDenominator(x) * getDenominator(y);
 }
 
@@ -39,8 +40,8 @@ function multiplyNumerDenom({
   toNumerator,
   toDenominator,
 }: {
-  toNumerator: number | PairNumber;
-  toDenominator: number | PairNumber;
+  toNumerator: PairNumber;
+  toDenominator: PairNumber;
 }) {
   return getNumerator(toNumerator) * getDenominator(toDenominator);
 }
