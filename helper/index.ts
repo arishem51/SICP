@@ -18,7 +18,7 @@ function increase(x: number) {
   return x + 1;
 }
 
-function plus() {
+function plus(...numbers: Number[]) {
   const args = [...arguments];
   return args.reduce((prev, current) => (prev += current), 0);
 }
@@ -43,6 +43,18 @@ function isGreater(x: number, y: number) {
   return x > y;
 }
 
+function isEqual(x: number, y: number) {
+  return x === y;
+}
+
+function gcd(a: number, b: number): number {
+  if (b === 0) {
+    return a;
+  }
+
+  return gcd(b, a % b);
+}
+
 export {
   isEven,
   isGreater,
@@ -54,4 +66,6 @@ export {
   multiply,
   minus,
   square,
+  isEqual,
+  gcd,
 };

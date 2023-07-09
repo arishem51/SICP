@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.square = exports.minus = exports.multiply = exports.plus = exports.average = exports.divide = exports.increase = exports.isNaN = exports.isGreater = exports.isEven = void 0;
+exports.gcd = exports.isEqual = exports.square = exports.minus = exports.multiply = exports.plus = exports.average = exports.divide = exports.increase = exports.isNaN = exports.isGreater = exports.isEven = void 0;
 function isNaN(x) {
     return Number.isNaN(x);
 }
@@ -21,7 +21,7 @@ function increase(x) {
     return x + 1;
 }
 exports.increase = increase;
-function plus() {
+function plus(...numbers) {
     const args = [...arguments];
     return args.reduce((prev, current) => (prev += current), 0);
 }
@@ -46,3 +46,14 @@ function isGreater(x, y) {
     return x > y;
 }
 exports.isGreater = isGreater;
+function isEqual(x, y) {
+    return x === y;
+}
+exports.isEqual = isEqual;
+function gcd(a, b) {
+    if (b === 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+exports.gcd = gcd;
