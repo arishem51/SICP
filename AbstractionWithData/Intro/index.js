@@ -28,3 +28,17 @@ function printRational(rat) {
     console.log(`The rational number is: ${rat[0]} / ${rat[1]}`);
 }
 printRational(addRationals(oneHalf, oneThird));
+function pair(x, y) {
+    return (index) => {
+        if (index > 1 || index < 0) {
+            return x;
+        }
+        return [x, y][index];
+    };
+}
+function select(dispatch, index) {
+    return dispatch(index);
+}
+const p = pair(20, 14);
+console.log(select(p, 0));
+console.log(select(p, 1));

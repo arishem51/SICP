@@ -36,3 +36,23 @@ function printRational(rat: number[]) {
 }
 
 printRational(addRationals(oneHalf, oneThird));
+
+type DispatchAction = (index: number) => number;
+
+function pair(x: number, y: number): DispatchAction {
+  return (index: number) => {
+    if (index > 1 || index < 0) {
+      return x;
+    }
+    return [x, y][index];
+  };
+}
+
+function select(dispatch: DispatchAction, index: number) {
+  return dispatch(index);
+}
+
+const p = pair(20, 14);
+
+console.log(select(p, 0));
+console.log(select(p, 1));
