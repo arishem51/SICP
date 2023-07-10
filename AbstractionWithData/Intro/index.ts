@@ -1,94 +1,61 @@
-import { divide, gcd, isEqual, minus, plus } from "../../helper";
+import { gcd } from "../../helper";
 
-type PairNumber = number[];
+type DispatchAction = (m: number) => number;
 
-const makePairNum = (x: number, y: number) => {
-  const arr = [x, y];
+function makeRationalNum(x: number, y: number) {
+  return pair(x, y);
+}
+
+function getNumerator(x: DispatchAction) {
+  const g = gcd(head(x), tail(x));
+  return head(x) / g;
+}
+function getDenominator(x: DispatchAction) {
+  const g = gcd(head(x), tail(x));
+  return tail(x) / g;
+}
+
+function pair(x: number, y: number): DispatchAction {
   function dispatch(m: number) {
-    if (m === 0 || m === 1) {
-      return arr[m];
+    if (m === 1 || m === 0) {
+      return [x, y][m];
     }
-    return new Error(`${m}, The argument you provide is not 0 or 1 -- pair `);
+    return x;
   }
   return dispatch;
-};
-
-function getRationalNumPart(type: "numerator" | "denominator") {
-  return (x: PairNumber) => {
-    const g = gcd(getHead(x), getTail(x));
-    return divide(type === "numerator" ? getHead(x) : getTail(x), g);
-  };
 }
 
-const getHead = (x: any) => x(0);
-const getTail = (x: any) => x(1);
-
-const makeRationalNum = makePairNum;
-
-const getNumerator = getRationalNumPart("numerator");
-
-const getDenominator = getRationalNumPart("numerator");
-
-function multiplyDenominator(x: PairNumber, y: PairNumber) {
-  return getDenominator(x) * getDenominator(y);
+function head(z: DispatchAction) {
+  return z(0);
+}
+function tail(z: DispatchAction) {
+  return z(1);
 }
 
-function multiplyNumerDenom({
-  toNumerator,
-  toDenominator,
-}: {
-  toNumerator: PairNumber;
-  toDenominator: PairNumber;
-}) {
-  return getNumerator(toNumerator) * getDenominator(toDenominator);
-}
-
-function addRationalNum(x: PairNumber, y: PairNumber) {
+function add_rat(x: DispatchAction, y: DispatchAction) {
   return makeRationalNum(
-    plus(
-      multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-      multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-    ),
-    multiplyDenominator(x, y)
+    getNumerator(x) * getDenominator(y) + getNumerator(y) * getDenominator(x),
+    getDenominator(x) * getDenominator(y)
   );
 }
 
-// function subRationalNum(x: number, y: number) {
+// function sub_rat(x: number, y: number) {
 //   return makeRationalNum(
-//     minus(
-//       multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-//       multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-//     ),
-//     multiplyDenominator(x, y)
+//     getNumerator(x) * getDenominator(y) - getNumerator(y) * getDenominator(x),
+//     getDenominator(x) * getDenominator(y)
 //   );
 // }
-
-// function multiplyRationalNum(x: number, y: number) {
-//   return makeRationalNum(
-//     multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-//     multiplyDenominator(x, y)
-//   );
+// function mul_rat(x: number, y: number) {
+//   return makeRationalNum(getNumerator(x) * getNumerator(y), getDenominator(x) * getDenominator(y));
 // }
-
-// function dividedRationalNum(x: number, y: number) {
-//   return makeRationalNum(
-//     multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-//     multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-//   );
+// function div_rat(x: number, y: number) {
+//   return makeRationalNum(getNumerator(x) * getDenominator(y), getDenominator(x) * getNumerator(y));
 // }
-
-// function isRationalNumEqual(x: number, y: number) {
-//   return isEqual(
-//     multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-//     multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-//   );
+// function equal_rat(x: number, y: number) {
+//   return getNumerator(x) * getDenominator(y) === getNumerator(y) * getDenominator(x);
 // }
+const oneThird = makeRationalNum(1, 3);
+const oneFirth = makeRationalNum(1, 5);
+const result = add_rat(oneThird, oneFirth);
 
-const printRat = (x: PairNumber) => {
-  const numerator = getNumerator(x);
-  const denominator = getDenominator(x);
-  console.log(`${numerator}/${denominator}`);
-};
-
-const oneHalf = makeRationalNum(1, 2);
-const oneThird = makePairNum(1, 3);
+console.log(`${getNumerator(result)} / ${getDenominator(result)}`);

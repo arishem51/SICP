@@ -1,54 +1,51 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const helper_1 = require("../../helper");
-const makePairNum = (x, y) => {
+function makeRationalNum(x, y) {
+    return pair(x, y);
+}
+function getNumerator(x) {
+    const g = (0, helper_1.gcd)(head(x), tail(x));
+    return head(x) / g;
+}
+function getDenominator(x) {
+    const g = (0, helper_1.gcd)(head(x), tail(x));
+    return tail(x) / g;
+}
+function pair(x, y) {
     function dispatch(m) {
-        if (m === 0) {
-            return x;
+        if (m === 1 || m === 0) {
+            return [x, y][m];
         }
-        if (m === 1) {
-            return y;
-        }
-        return new Error(`${m}, The argument you provide is not 0 or 1 -- pair `);
+        return x;
     }
     return dispatch;
-};
-function getRationalNumPart(type) {
-    return (x) => {
-        const g = (0, helper_1.gcd)(getHead(x), getTail(x));
-        return (0, helper_1.divide)(type === "numerator" ? getHead(x) : getTail(x), g);
-    };
 }
-const getHead = (x) => x(0);
-const getTail = (x) => x(1);
-const makeRationalNum = makePairNum;
-const getNumerator = getRationalNumPart("numerator");
-const getDenominator = getRationalNumPart("numerator");
-function multiplyDenominator(x, y) {
-    return getDenominator(x) * getDenominator(y);
+function head(z) {
+    return z(0);
 }
-function multiplyNumerDenom({ toNumerator, toDenominator, }) {
-    return getNumerator(toNumerator) * getDenominator(toDenominator);
+function tail(z) {
+    return z(1);
 }
-function addRationalNum(x, y) {
-    return makeRationalNum((0, helper_1.plus)(multiplyNumerDenom({ toNumerator: x, toDenominator: y }), multiplyNumerDenom({ toNumerator: y, toDenominator: x })), multiplyDenominator(x, y));
+function add_rat(x, y) {
+    return makeRationalNum(getNumerator(x) * getDenominator(y) + getNumerator(y) * getDenominator(x), getDenominator(x) * getDenominator(y));
 }
-function subRationalNum(x, y) {
-    return makeRationalNum((0, helper_1.minus)(multiplyNumerDenom({ toNumerator: x, toDenominator: y }), multiplyNumerDenom({ toNumerator: y, toDenominator: x })), multiplyDenominator(x, y));
-}
-function multiplyRationalNum(x, y) {
-    return makeRationalNum(multiplyNumerDenom({ toNumerator: x, toDenominator: y }), multiplyDenominator(x, y));
-}
-function dividedRationalNum(x, y) {
-    return makeRationalNum(multiplyNumerDenom({ toNumerator: x, toDenominator: y }), multiplyNumerDenom({ toNumerator: y, toDenominator: x }));
-}
-function isRationalNumEqual(x, y) {
-    return (0, helper_1.isEqual)(multiplyNumerDenom({ toNumerator: x, toDenominator: y }), multiplyNumerDenom({ toNumerator: y, toDenominator: x }));
-}
-const printRat = (x) => {
-    const numerator = getNumerator(x);
-    const denominator = getDenominator(x);
-    console.log(`${numerator}/${denominator}`);
-};
-const oneHalf = makeRationalNum(1, 2);
-const oneThird = makePairNum(1, 3);
+// function sub_rat(x: number, y: number) {
+//   return makeRationalNum(
+//     getNumerator(x) * getDenominator(y) - getNumerator(y) * getDenominator(x),
+//     getDenominator(x) * getDenominator(y)
+//   );
+// }
+// function mul_rat(x: number, y: number) {
+//   return makeRationalNum(getNumerator(x) * getNumerator(y), getDenominator(x) * getDenominator(y));
+// }
+// function div_rat(x: number, y: number) {
+//   return makeRationalNum(getNumerator(x) * getDenominator(y), getDenominator(x) * getNumerator(y));
+// }
+// function equal_rat(x: number, y: number) {
+//   return getNumerator(x) * getDenominator(y) === getNumerator(y) * getDenominator(x);
+// }
+const oneThird = makeRationalNum(1, 3);
+const oneFirth = makeRationalNum(1, 5);
+const result = add_rat(oneThird, oneFirth);
+console.log(`${getNumerator(result)} / ${getDenominator(result)}`);
