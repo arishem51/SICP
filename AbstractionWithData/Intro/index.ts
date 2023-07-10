@@ -1,11 +1,6 @@
 import { divide, gcd, isEqual, minus, plus } from "../../helper";
 
-type PairNumber =
-  | {
-      head: number;
-      tail: number;
-    }
-  | number;
+type PairNumber = any;
 
 const makePairNum = (x: number, y: number) => {
   function dispatch(m: number) {
