@@ -42,3 +42,28 @@ function select(dispatch, index) {
 const p = pair(20, 14);
 console.log(select(p, 0));
 console.log(select(p, 1));
+// Counting how many times a value appears in a list/sequence
+function counting(items, value) {
+    let count = 0;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i] === value) {
+            count++;
+        }
+    }
+    console.log(`${value} has appears ${count} times`);
+}
+counting([1, 3, 4, 1, 2], 1);
+function makeWithDraw(balance) {
+    return (amount) => {
+        const rest = balance - amount;
+        if (rest < 0) {
+            return "Don't have enough amount";
+        }
+        balance -= amount;
+        return rest;
+    };
+}
+const withDraw = makeWithDraw(100);
+console.log(withDraw(25));
+console.log(withDraw(55));
+console.log(withDraw(25));
