@@ -1,14 +1,12 @@
 import { divide, gcd, isEqual, minus, plus } from "../../helper";
 
-type PairNumber = any;
+type PairNumber = number[];
 
 const makePairNum = (x: number, y: number) => {
+  const arr = [x, y];
   function dispatch(m: number) {
-    if (m === 0) {
-      return x;
-    }
-    if (m === 1) {
-      return y;
+    if (m === 0 || m === 1) {
+      return arr[m];
     }
     return new Error(`${m}, The argument you provide is not 0 or 1 -- pair `);
   }
@@ -55,36 +53,36 @@ function addRationalNum(x: PairNumber, y: PairNumber) {
   );
 }
 
-function subRationalNum(x: number, y: number) {
-  return makeRationalNum(
-    minus(
-      multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-      multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-    ),
-    multiplyDenominator(x, y)
-  );
-}
+// function subRationalNum(x: number, y: number) {
+//   return makeRationalNum(
+//     minus(
+//       multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
+//       multiplyNumerDenom({ toNumerator: y, toDenominator: x })
+//     ),
+//     multiplyDenominator(x, y)
+//   );
+// }
 
-function multiplyRationalNum(x: number, y: number) {
-  return makeRationalNum(
-    multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-    multiplyDenominator(x, y)
-  );
-}
+// function multiplyRationalNum(x: number, y: number) {
+//   return makeRationalNum(
+//     multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
+//     multiplyDenominator(x, y)
+//   );
+// }
 
-function dividedRationalNum(x: number, y: number) {
-  return makeRationalNum(
-    multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-    multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-  );
-}
+// function dividedRationalNum(x: number, y: number) {
+//   return makeRationalNum(
+//     multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
+//     multiplyNumerDenom({ toNumerator: y, toDenominator: x })
+//   );
+// }
 
-function isRationalNumEqual(x: number, y: number) {
-  return isEqual(
-    multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
-    multiplyNumerDenom({ toNumerator: y, toDenominator: x })
-  );
-}
+// function isRationalNumEqual(x: number, y: number) {
+//   return isEqual(
+//     multiplyNumerDenom({ toNumerator: x, toDenominator: y }),
+//     multiplyNumerDenom({ toNumerator: y, toDenominator: x })
+//   );
+// }
 
 const printRat = (x: PairNumber) => {
   const numerator = getNumerator(x);
