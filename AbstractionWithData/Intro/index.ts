@@ -1,61 +1,38 @@
 import { gcd } from "../../helper";
 
-type DispatchAction = (m: number) => number;
-
-function makeRationalNum(x: number, y: number) {
-  return pair(x, y);
+function rational(n: number, d: number) {
+  const g = gcd(n, d);
+  return [n / g, d / g];
 }
 
-function getNumerator(x: DispatchAction) {
-  const g = gcd(head(x), tail(x));
-  return head(x) / g;
-}
-function getDenominator(x: DispatchAction) {
-  const g = gcd(head(x), tail(x));
-  return tail(x) / g;
+function numer(x: number[]) {
+  return x[0];
 }
 
-function pair(x: number, y: number): DispatchAction {
-  function dispatch(m: number) {
-    if (m === 1 || m === 0) {
-      return [x, y][m];
-    }
-    return x;
-  }
-  return dispatch;
+function denom(x: number[]) {
+  return x[1];
 }
 
-function head(z: DispatchAction) {
-  return z(0);
-}
-function tail(z: DispatchAction) {
-  return z(1);
-}
-
-function add_rat(x: DispatchAction, y: DispatchAction) {
-  return makeRationalNum(
-    getNumerator(x) * getDenominator(y) + getNumerator(y) * getDenominator(x),
-    getDenominator(x) * getDenominator(y)
+function addRationals(x: number[], y: number[]) {
+  const numerValue = {
+    x: numer(x),
+    y: numer(y),
+  };
+  const denomValue = {
+    x: denom(x),
+    y: denom(y),
+  };
+  return rational(
+    numerValue.x * denomValue.y + numerValue.y * denomValue.x,
+    denomValue.y * denomValue.x
   );
 }
 
-// function sub_rat(x: number, y: number) {
-//   return makeRationalNum(
-//     getNumerator(x) * getDenominator(y) - getNumerator(y) * getDenominator(x),
-//     getDenominator(x) * getDenominator(y)
-//   );
-// }
-// function mul_rat(x: number, y: number) {
-//   return makeRationalNum(getNumerator(x) * getNumerator(y), getDenominator(x) * getDenominator(y));
-// }
-// function div_rat(x: number, y: number) {
-//   return makeRationalNum(getNumerator(x) * getDenominator(y), getDenominator(x) * getNumerator(y));
-// }
-// function equal_rat(x: number, y: number) {
-//   return getNumerator(x) * getDenominator(y) === getNumerator(y) * getDenominator(x);
-// }
-const oneThird = makeRationalNum(1, 3);
-const oneFirth = makeRationalNum(1, 5);
-const result = add_rat(oneThird, oneFirth);
+const oneHalf = rational(1, 6);
+const oneThird = rational(1, 3);
 
-console.log(`${getNumerator(result)} / ${getDenominator(result)}`);
+function printRational(rat: number[]) {
+  console.log(`The rational number is: ${rat[0]} / ${rat[1]}`);
+}
+
+printRational(addRationals(oneHalf, oneThird));
